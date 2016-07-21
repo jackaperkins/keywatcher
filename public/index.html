@@ -1,1 +1,32 @@
-beep boop
+<html>
+<head>
+  <script type="text/javascript" src="lib/jquery.1.8.2.js"></script>
+    <script type="text/javascript" src="lib/highcharts.js"></script>
+    <script type="text/javascript">
+    $(function () {
+      $.ajax("/minutes").done(function (data) {
+        console.log(data);
+        $('#container').highcharts({
+            chart: {
+
+            },
+            title: {
+                text: 'Keystrokes'
+            },
+            series: [{
+              type: 'area',
+              step: 'left',
+              name: "key presses per minute",
+              data: data
+            }]
+          });
+        });
+      });
+
+    </script>
+</head>
+<body>
+  <div id="container">
+  </div>
+</body>
+</html>

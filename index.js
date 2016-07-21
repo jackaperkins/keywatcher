@@ -17,7 +17,7 @@ setInterval(function () {
   for (var i = minutes.length -1; i > minutes.length - 30 && i >= 0; i--){
     console.log(minutes[i]);
   }
-}, 1000 * 5);
+}, 1000 * 60);
 
 tail.on("line", function(data) {
   //console.log(data);
