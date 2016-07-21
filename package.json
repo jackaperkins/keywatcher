@@ -2,7 +2,8 @@
   "name": "keywatcher",
   "description": "jacks keylogger watcher for his hands",
   "dependencies": {
-    "tail": "*"
+    "tail": "*",
+    "express": "4.14.0"
   },
   "scripts": {
     "start": "node index.js"

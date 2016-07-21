@@ -1,8 +1,10 @@
 var Tail = require('tail').Tail;
 var tail = new Tail('/var/log/keystroke.log');
-var http = require('http');
 
+var express = require('express');
+var app = express();
 
+// --- keylogger portion
 var minutes = [];
 var count = 0;
 
@@ -15,15 +17,17 @@ setInterval(function () {
   for (var i = minutes.length -1; i > minutes.length - 30 && i >= 0; i--){
     console.log(minutes[i]);
   }
-}, 1000 * 60);
+}, 1000 * 5);
 
 tail.on("line", function(data) {
   //console.log(data);
   count++;
 });
 
-var server = http.createServer(function (req, res) {
-  res.end("col beans");
+// ------ server portion
+
+app.get('/minutes', function (req, res) {
+  res.json(minutes);
 });
 
-server.listen(8080);
+app.listen(8080);
