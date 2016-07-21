@@ -30,4 +30,6 @@ app.get('/minutes', function (req, res) {
   res.json(minutes);
 });
 
+app.use(express.static('public'));
+
 app.listen(8080);
