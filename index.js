@@ -1,6 +1,7 @@
-Tail = require('tail').Tail;
+var Tail = require('tail').Tail;
+var tail = new Tail('/var/log/keystroke.log');
+var http = require('http');
 
-tail = new Tail("/var/log/keystroke.log");
 
 var minutes = [];
 var count = 0;
@@ -16,8 +17,13 @@ setInterval(function () {
   }
 }, 1000 * 60);
 
-
 tail.on("line", function(data) {
   //console.log(data);
   count++;
 });
+
+var server = http.createServer(function (req, res) {
+  res.end("col beans");
+});
+
+server.listen(8080);
