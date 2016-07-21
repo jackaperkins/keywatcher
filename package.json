@@ -1,0 +1,10 @@
+{
+  "name": "keywatcher",
+  "description": "jacks keylogger watcher for his hands",
+  "packages": {
+    "tail": "*"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
