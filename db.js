@@ -18,12 +18,12 @@ var controller = module.exports = {
   store: function (minute, callback) {
       var stmt = db.prepare("INSERT INTO minutes VALUES ($time, $count)");
       stmt.run({
-        $time: "boop",
-        $count: 2
+        $time: minute.time,
+        $count: minute.count
       });
       stmt.finalize(callback);
   },
   get: function (callback) {
-    db.get("select * from minutes LIMIT 50");
+    db.all("select * from minutes", callback);
   }
 };
