@@ -33,7 +33,10 @@ db.init(function (err) {
   // ------ server portion
 
   app.get('/minutes', function (req, res) {
-    res.json(minutes);
+    db.get(function (err, data) {
+      if (err) return res.status(500).send("crap :(");
+      res.json(data);
+    })
   });
 
   app.use(express.static('public'));

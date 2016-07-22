@@ -5,10 +5,21 @@
     <script type="text/javascript">
     $(function () {
       $.ajax("/minutes").done(function (data) {
+        var convert = [];
+        data.forEach(function (obj) {
+          convert.push([Date.parse(obj.time), obj.count]);
+        });
         console.log(data);
         $('#container').highcharts({
             chart: {
 
+            },
+            xAxis: {
+              type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                  month: '%e. %b',
+                  year: '%b'
+                },
             },
             title: {
                 text: 'Keystrokes'
@@ -17,7 +28,7 @@
               type: 'area',
               step: 'left',
               name: "key presses per minute",
-              data: data
+              data: convert
             }]
           });
         });
