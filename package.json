@@ -2,6 +2,7 @@
   "name": "keywatcher",
   "description": "jacks keylogger watcher for his hands",
   "dependencies": {
+    "async": "2.0.0",
     "express": "4.14.0",
     "sqlite3": "3.1.4",
     "tail": "*"
