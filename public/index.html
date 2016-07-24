@@ -18,13 +18,13 @@
           convert.push([Date.parse(obj.time), obj.count]);
         });
 
-        var fives = getCount(data, 10)
+        var fives = getCount(data, 5)
         $('#five-box .number').html(fives);
-        if(fives/10 > 45) {
+        if(fives/5 > 60) {
           $('#five-box').addClass('red');
-        } else if (fives/10 > 30){
+        } else if (fives/5 > 40){
           $('#five-box').addClass('orange');
-        } else if (fives / 10 > 10){
+        } else if (fives / 5 > 20){
             $('#five-box').addClass('yellow');
         }
 
@@ -103,7 +103,7 @@
 </head>
 <body>
   <div id="shebang">
-    <div id="five-box" class="half-box"><span class="number"></span> last 10 mins</div>
+    <div id="five-box" class="half-box"><span class="number"></span> last 5 mins</div>
     <div id="hour-box" class="half-box"><span class="number"></span> last hour</div>
     <div class="clear"></div>
     <div id="container">
