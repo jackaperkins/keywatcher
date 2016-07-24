@@ -4,11 +4,51 @@
     <script type="text/javascript" src="lib/highcharts.js"></script>
     <script type="text/javascript">
     $(function () {
+      function getCount(data, minutes) {
+        var count = 0;
+        for(var i = 0; i < minutes && i < data.length; i++) {
+          count += data[i].count;
+        }
+        return count;
+      }
+
       $.ajax("/minutes").done(function (data) {
-        console.log(data);
+        var convert = [];
+        data.forEach(function (obj) {
+          convert.push([Date.parse(obj.time), obj.count]);
+        });
+
+        var fives = getCount(data, 10)
+        $('#five-box .number').html(fives);
+        if(fives/10 > 45) {
+          $('#five-box').addClass('red');
+        } else if (fives/10 > 30){
+          $('#five-box').addClass('orange');
+        } else if (fives / 10 > 10){
+            $('#five-box').addClass('yellow');
+        }
+
+        var hours = getCount(data, 60)
+        $('#hour-box .number').html(hours);
+        if(hours/60 > 25) {
+          $('#hour-box').addClass('red');
+        } else if (hours/60 > 15){
+          $('#hour-box').addClass('orange');
+        } else if (hours / 60 > 10){
+            $('#hour-box').addClass('yellow');
+        }
+
+        var convert = convert.splice(0, 30);
         $('#container').highcharts({
             chart: {
 
+            },
+            xAxis: {
+              type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                  month: '%e. %b',
+                  year: '%b'
+                },
             },
             title: {
                 text: 'Keystrokes'
@@ -17,16 +57,57 @@
               type: 'area',
               step: 'left',
               name: "key presses per minute",
-              data: data
+              data: convert
             }]
           });
         });
       });
 
     </script>
+    <style>
+      #shebang {
+        width: 900px;
+        margin: 0 auto;
+      }
+
+      .half-box {
+        float: left;
+        text-align: center;
+        padding: 25px 0px;
+        width: 430px;
+        margin: 0px 20px 20px 0px;
+        background: #eee;
+        font-size:  18px;
+      }
+      .half-box .number {
+        font-weight: bold;
+        font-size: 22px;
+        padding: 10px;
+      }
+      .clear {
+        clear:both;
+      }
+
+      .red {
+
+        background: #E0A2A2;
+      }
+      .orange {
+        background: #EBD7B2;
+      }
+
+      .yellow {
+        background: #FAFFE9;
+      }
+    </style>
 </head>
 <body>
-  <div id="container">
+  <div id="shebang">
+    <div id="five-box" class="half-box"><span class="number"></span> last 10 mins</div>
+    <div id="hour-box" class="half-box"><span class="number"></span> last hour</div>
+    <div class="clear"></div>
+    <div id="container">
+    </div>
   </div>
 </body>
 </html>
