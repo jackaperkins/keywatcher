@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 
 var db = require('./db.js');
+var notify = require('./notify.js');
 
 
 // --- keylogger portion
@@ -24,6 +25,7 @@ db.init(function (err) {
     db.get(function (err, data) {
       console.log(data);
     });
+    checkDanger();
   }, 1000 * 60);
 
   tail.on("line", function(data) {
@@ -42,5 +44,17 @@ db.init(function (err) {
   app.use(express.static('public'));
 
   app.listen(8080);
-
 });
+
+function checkDanger () {
+  db.get(function (err, data) {
+    var count = 0;
+    for (var i = 0; i < 5; i++) {
+      count += data[i].count;
+    }
+
+    if(count / 5 > 60) {
+      notify.danger("Typing too damn fast!");
+    }
+  });
+}
