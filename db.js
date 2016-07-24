@@ -24,6 +24,6 @@ var controller = module.exports = {
       stmt.finalize(callback);
   },
   get: function (callback) {
-    db.all("select * from minutes", callback);
+    db.all("select * from minutes ORDER BY rowid DESC LIMIT 300", callback);
   }
 };
